@@ -17,7 +17,7 @@ tar xvzf WordNet-3.0.tar.gz
 sudo mv WordNet-3.0 /opt/
 rm WordNet-3.0.tar.gz
 ```
-In case you do not want to move WordNet to the `/opt/` directory, then set the `WORDNET_PATH` variable in `src/datasets/dataset_utils.py` to the full path of your WordNet-3.0 directory.
+In case you do not want to move WordNet to the `/opt/` directory, then set the `WORDNET_PATH` variable in `src/datasets/__init__.py` to the full path of your WordNet-3.0 directory.
 
 # Train
 
