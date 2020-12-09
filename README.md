@@ -11,9 +11,11 @@ conda install pytorch==1.5.0 torchtext==0.6.0 cudatoolkit=10.1 -c pytorch
 ```
 Then, download and install WordNet.
 ```bash
+cd /tmp
 wget http://wordnetcode.princeton.edu/3.0/WordNet-3.0.tar.gz
 tar xvzf WordNet-3.0.tar.gz
 sudo mv WordNet-3.0 /opt/
+rm WordNet-3.0.tar.gz
 ```
 In case you do not want to move WordNet to the `/opt/` directory, then set the `WORDNET_PATH` variable in `src/datasets/dataset_utils.py` to the full path of your WordNet-3.0 directory.
 
