@@ -132,3 +132,4 @@ wandb/
 test_training.txt
 resources/
 src/nlp-tools
+src/nlp-tools_
