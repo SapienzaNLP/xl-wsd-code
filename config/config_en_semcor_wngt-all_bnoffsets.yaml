@@ -1,0 +1,121 @@
+data:
+  langs:
+    - en
+    - it
+    - es
+    - fr
+    - de
+    - zh
+    - ca
+    - bg
+    - eu
+    - gl
+    - hr
+    - da
+    - nl
+    - et
+    - hu
+    - ja
+    - ko
+    - sl
+  test_data_root: /home/tommaso/Documents/data/xl-wsd/evaluation_datasets/
+  train_data_root:
+    en:
+      - /home/tommaso/Documents/data/xl-wsd/training_datasets/semcor_en/semcor_en.data.xml
+      - /home/tommaso/Documents/data/xl-wsd/training_datasets/wngt_examples_en/wngt_examples_en.data.xml
+      - /home/tommaso/Documents/data/xl-wsd/training_datasets/wngt_glosses_en/wngt_glosses_en.data.xml
+  sense_inventory: bnoffsets
+  outpath: data/output/models/xlmr-large-batchnorm/ 
+  test_names:
+    en:
+        - test-en
+        - test-en-coarse
+        - dev-en
+    it:
+      - test-it
+      - dev-it
+    es:
+      - test-es
+      - dev-es
+    fr:
+      - test-fr
+      - dev-fr
+    de:
+      - test-de
+      - dev-de
+    zh:
+      - test-zh
+      - dev-zh
+    gl:
+      - test-gl
+      - dev-gl
+    hr:
+      - test-hr
+      - dev-hr
+    da:
+      - test-da
+      - dev-da
+    et:
+      - test-et
+      - dev-et
+    ja:
+      - test-ja
+      - dev-ja
+    hu:
+      - test-hu
+      - dev-hu
+    bg:
+      - test-bg
+      - dev-bg
+    eu:
+      - test-eu
+      - dev-eu
+    ca:
+      - test-ca
+      - dev-ca
+    ko:
+      - test-ko
+      - dev-ko
+    sl:
+      - test-sl
+      - dev-sl
+    nl:
+      - test-nl
+      - dev-nl
+  dev_name:
+    - en
+    - dev-en
+
+  max_segments_in_batch: 1000
+  force_reload: True
+  inventory_dir: /home/tommaso/Documents/data/xl-wsd/inventories
+
+model:
+  device: cuda
+  encoder_name: xlm-roberta-large
+  wsd_model_name: batchnorm_wsd_classifier
+  layers_to_use:
+    - -1
+    - -2
+    - -3
+    - -4
+  cache_instances: True
+  finetune_embedder: False 
+
+training:
+  num_epochs: 50
+  gradient_accumulation: 1
+  patience: 3
+  learning_rate: 2e-5
+  validation_metric: -loss
+  gradient_clipping: 1
+  
+
+wandb:
+  metrics_to_report:
+    - f1
+    - loss
+    - epoch
+  soft_match: True
+
+random_seed: 123 
