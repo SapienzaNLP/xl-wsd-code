@@ -16,7 +16,7 @@ from nlp_tools.data_io.datasets import LabelVocabulary, WSDDataset
 from src.datasets import (BABELNET_VOCABULARY,
                           DEFAULT_INVENTORY_DIR,
                           WORDNET_DICT_PATH)
-from utils.utils import get_info_logger
+from src.utils.utils import get_info_logger
 
 logger = get_info_logger(__name__)
 

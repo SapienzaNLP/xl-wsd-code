@@ -4,6 +4,8 @@ from typing import Any, Dict, Iterator, Tuple
 
 import numpy as np
 import torch
+from src.utils.utils import *
+
 from allennlp.data import Vocabulary
 from allennlp.models import Model
 from allennlp.modules import TextFieldEmbedder
@@ -18,7 +20,7 @@ from torch.nn import Parameter
 from torch.nn.modules.batchnorm import BatchNorm1d
 from transformers.activations import swish
 
-from utils.utils import get_info_logger
+
 
 
 class WSDOutputWriter(OutputWriter):

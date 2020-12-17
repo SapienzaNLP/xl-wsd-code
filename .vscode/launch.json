@@ -9,6 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
+            "justMyCode": false,
             "console": "integratedTerminal"
         },
         {
@@ -17,7 +18,8 @@
             "request": "launch",
             "program": "src/training/wsd_trainer.py",
             "console": "integratedTerminal",
-            "args": ["--config", "config/config_en_semcor_wngt-all_bnoffsets.train.yaml", "--dryrun"]
+            "justMyCode": false,
+            "args": ["--config", "config/config_en_semcor_wngt.train.yaml", "--dryrun"]
         }
     ]
 }

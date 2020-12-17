@@ -178,7 +178,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", required=True)
     parser.add_argument("--checkpoint_path", default=None)
     parser.add_argument("--output_path", default=None)
-    parser.add_argument("--pos", default=None)
+    parser.add_argument("--pos", default=None, nargs="+")
     parser.add_argument("--verbose", action="store_true", default=False)
     parser.add_argument("--debug", action="store_true", default=False)
     parser.add_argument("--cpu", action="store_true", default=False)

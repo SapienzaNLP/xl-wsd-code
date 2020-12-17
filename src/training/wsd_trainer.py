@@ -76,7 +76,8 @@ def main(args):
     wandb_run_name = wandb_config.get("run_name", wsd_model_name + "_" + encoder_name)
     wandb.init(config=config, project=wandb_config.get("project_name", "xl-wsd-framework"),
             tags=[socket.gethostname(), wsd_model_name, ",".join(langs)],
-            name=wandb_run_name, resume=wandb_config.get("resume", False))
+            name=wandb_run_name, resume=wandb_config.get("resume", False),
+            entity=wandb_config.get("entity", None))
     wandb.log({"random_seed": seed})
     logger.info("loading config: " + args.config)
     pprint(config)

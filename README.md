@@ -119,3 +119,14 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
  `--debug` to print debug files.
 
  `--cpu` to run the evaluation in CPU rather then on GPU.
+
+ For example, 
+ ```bash
+ PYTHONPATH=. python src/evaluation/evaluate_model.py --config config/config_en_semcor_wngt.test.yaml --pos n
+ ```
+ would print only the results on the test sets computed on nominal instances only.
+
+ ```bash
+ PYTHONPATH=. python src/evaluation/evaluate_model.py --config config/config_en_semcor_wngt.test.yaml --pos n v
+ ```
+ would instead print results computed separately on nouns and versb. 
