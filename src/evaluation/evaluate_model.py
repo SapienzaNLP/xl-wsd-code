@@ -15,23 +15,23 @@ from tabulate import tabulate
 from tqdm import tqdm
 import pandas
 
-from src.datasets.dataset_utils import get_mapper, get_data, get_allen_datasets
+from src.datasets.dataset_utils import get_data, get_allen_datasets
 from src.modelling.neural_wsd_models import AllenWSDModel, WSDF1
-from src.utils.utils import get_model
+from src.utils.utils import get_info_logger, get_model
 
 
+logger = get_info_logger(__name__)
 def evaluate(data_loader, model, output_path, label_vocab, device_int, use_mfs=False, mfs_vocab=None,
              verbose=True, debug=False):
     f1_computer = WSDF1(label_vocab, use_mfs, mfs_vocab)
     batch_generator = iter(data_loader)
 
-    with open(output_path, "w") as writer, \
-            open(output_path.replace(".txt", ".mfs.txt"), "w") as mfs_writer, \
-            open(output_path.replace(".txt", ".mfs.info.txt"), "w") as mfs_info_writer:
+    with open(output_path, "w") as writer:
         bar = batch_generator
         if verbose:
             bar = tqdm(batch_generator)
-        debugwriter = open(output_path + ".debug.txt", "w")
+        if debug:
+            debugwriter = open(output_path + ".debug.txt", "w")
         for batch in bar:
             if device_int >= 0:
                 batch = move_to_device(batch, device_int)
@@ -53,9 +53,6 @@ def evaluate(data_loader, model, output_path, label_vocab, device_int, use_mfs=F
                              for
                              lp, p in
                              zip(lemmapos, predictions)]
-                mfs_writer.write(
-                    "\n".join(["{} {}".format(id, p) for id, p in zip(ids, mfs_preds)]))
-                mfs_writer.write("\n")
             if debug:
                 for id, lp, p, label, possible_labels in zip(ids, lemmapos, predictions, labels,
                                                              [[label_vocab.get_string(y) for y in x] for x in
@@ -65,10 +62,9 @@ def evaluate(data_loader, model, output_path, label_vocab, device_int, use_mfs=F
                         pred = mfs_vocab.get(lp, "<unk>") if label_vocab.itos[p] == "<unk>" else label_vocab.itos[p]
                     else:
                         pred = label_vocab.itos[p]
-                    mfs_info_writer.write("{} {} {}\n".format(id, pred, "MFS" if is_mfs else ""))
-                    # if pred not in label:
-                    debugwriter.write(
-                        "{}\t{}\t{}\t{}\t{}\n".format(id, lp, pred, label, ", ".join(possible_labels)))
+                    if debug:
+                        debugwriter.write(
+                            "{}\t{}\t{}\t{}\t{}\n".format(id, lp, pred, label, ", ".join(possible_labels)))
         metric = f1_computer.get_metric(True)
         if debug:
             debugwriter.close()
@@ -85,14 +81,14 @@ def evaluate_datasets(model: AllenWSDModel,
                       output_path,
                       verbose=True, debug=False,
                       ):
-    print("loading checkpoint ", checkpoint_path)
+    logger.info("loading checkpoint " + checkpoint_path)
     model.load_state_dict(
         torch.load(checkpoint_path, map_location="cpu" if device_int < 0 else "cuda:{}".format(device_int)))
     model.eval()
     all_metrics = dict()
     names = list()
     lines = list()
-    print("start evaluation")
+    logger.info("Evaluation starts")
     for lang, datasets in data_loaders.items():
         t_names = test_names[lang]
         for (data_loader, iterator), name in zip(datasets, t_names):
@@ -100,14 +96,13 @@ def evaluate_datasets(model: AllenWSDModel,
             metrics = evaluate(iterator, model, os.path.join(output_path, name + ".predictions.txt"),
                                label_vocab, device_int, mfs_dictionary is not None, mfs_dictionary, verbose=verbose,
                                debug=debug)
-            print(lang, metrics["f1"])
             all_metrics[name] = OrderedDict(
                 {"precision": metrics["precision"], "recall": metrics["recall"], "f1": metrics["f1"],
                  "f1_mfs": metrics.get("f1_mfs", None)})
             if verbose:
-                print(f"{name}: instances: {metrics['total']}, precision: {metrics['precision']}, recall: {metrics['recall']}, f1: {metrics['f1']}")
+                logger.info(f"{name}: instances: {metrics['total']}, precision: {metrics['precision']}, recall: {metrics['recall']}, f1: {metrics['f1']}")
             lines.append([metrics["total"],metrics["f1"]])
-    print("SUMMARY:")
+    logger.fino("SUMMARY:")
     d = DataFrame(lines, columns=["instances","F1"], index=names)
     with pandas.option_context('display.max_rows', None, 'display.max_columns',
                                None, 'display.float_format', '{:0.3f}'.format):
@@ -133,9 +128,8 @@ def main(args):
     inventory_dir = data_config.get("inventory_dir", None)
     langs = data_config["langs"]
     cpu = args.cpu
-    sense_inventory = data_config["sense_inventory"]
     mfs_file = data_config.get("mfs_file", None)
-    device = "cpu" if cpu else "cuda" #model_config["device"]
+    device = "cpu" if cpu else "cuda"
     encoder_name = model_config["encoder_name"]
     output_path = os.path.join(outpath, wsd_model_name + "_" + encoder_name)
     if "checkpoint_path" in vars(args) and args.checkpoint_path is not None:
@@ -150,10 +144,9 @@ def main(args):
     lang2test_paths = {lang: [os.path.join(test_data_root, name, name + ".data.xml") for name in names] for lang, names
                        in test_lang2name.items()}
     
-    test_label_mapper = get_mapper(lang2test_paths, sense_inventory)
-    lemma2synsets, mfs_dictionary, label_vocab = get_data(sense_inventory, langs, mfs_file, inventory_dir=inventory_dir)
-    test_dss = {lang: [get_allen_datasets(None,
-                                          encoder_name, lemma2synsets,
+    test_label_mapper = None
+    lemma2synsets, mfs_dictionary, label_vocab = get_data(langs, mfs_file, inventory_dir=inventory_dir)
+    test_dss = {lang: [get_allen_datasets(encoder_name, lemma2synsets,
                                           label_vocab, test_label_mapper, config["data"]["max_segments_in_batch"],
                                           {lang: [tp]}, force_reload=True, serialize=False,
                                           device = torch.device(device), pos=test_pos) for tp in test_paths]

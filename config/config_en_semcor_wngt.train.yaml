@@ -1,0 +1,52 @@
+data:
+  langs:
+    - en
+  inventory_dir: xl-wsd-data/inventories
+  test_data_root: xl-wsd-data/evaluation_datasets/
+  train_data_root:
+    en:
+      - xl-wsd-data/training_datasets/semcor_en/semcor_en.data.xml
+      - xl-wsd-data/training_datasets/wngt_examples_en/wngt_examples_en.data.xml
+      - xl-wsd-data/training_datasets/wngt_glosses_en/wngt_glosses_en.data.xml
+  outpath: data/output/models
+  test_names:
+    en:
+        - test-en
+        - test-en-coarse
+        - dev-en
+  dev_name:
+    - en
+    - dev-en
+  
+  max_segments_in_batch: 1000
+
+model:
+  device: cuda
+  encoder_name: xlm-roberta-large 
+  wsd_model_name: batchnorm_wsd_classifier
+  layers_to_use:
+    - -1
+    - -2
+    - -3
+    - -4
+  cache_instances: True
+  finetune_embedder: False 
+
+training:
+  num_epochs: 50
+  gradient_accumulation: 1
+  patience: 10
+  learning_rate: 2e-5
+  validation_metric: -loss
+  gradient_clipping: 1
+  
+
+wandb:
+  metrics_to_report:
+    - f1
+    - loss
+    - epoch
+  soft_match: True
+  project_name: xl-wsd-framework
+
+random_seed: 123 

@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wsd_trainer",
+            "type": "python",
+            "request": "launch",
+            "program": "src/training/wsd_trainer.py",
+            "console": "integratedTerminal",
+            "args": ["--config", "config/config_en_semcor_wngt-all_bnoffsets.train.yaml", "--dryrun"]
+        }
+    ]
+}

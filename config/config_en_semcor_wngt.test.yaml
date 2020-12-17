@@ -25,7 +25,7 @@ data:
       - /home/tommaso/Documents/data/xl-wsd/training_datasets/wngt_examples_en/wngt_examples_en.data.xml
       - /home/tommaso/Documents/data/xl-wsd/training_datasets/wngt_glosses_en/wngt_glosses_en.data.xml
   sense_inventory: bnoffsets
-  outpath: data/output/models/xlmr-large-batchnorm/ 
+  outpath: data/output/models/
   test_names:
     en:
         - test-en
@@ -118,4 +118,4 @@ wandb:
     - epoch
   soft_match: True
 
-random_seed: 123 
+random_seed: 421 

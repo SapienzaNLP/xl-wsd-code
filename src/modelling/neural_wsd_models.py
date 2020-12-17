@@ -1,6 +1,8 @@
+import os
 from abc import ABC, abstractmethod
-from typing import Dict, Any, Iterator, Tuple
+from typing import Any, Dict, Iterator, Tuple
 
+import numpy as np
 import torch
 from allennlp.data import Vocabulary
 from allennlp.models import Model
@@ -14,11 +16,9 @@ from nlp_tools.nlp_models.multilayer_pretrained_transformer_mismatched_embedder 
 from torch import nn
 from torch.nn import Parameter
 from torch.nn.modules.batchnorm import BatchNorm1d
-from torch.nn.modules.container import Sequential
 from transformers.activations import swish
-import os
-import numpy as np
-from src.misc.wsdlogging import get_info_logger
+
+from utils.utils import get_info_logger
 
 
 class WSDOutputWriter(OutputWriter):
@@ -30,7 +30,7 @@ class WSDOutputWriter(OutputWriter):
         golds = [x for y in outs["str_labels"] for x in y if x != ""]
         ids = [x for y in outs["ids"] for x in y]
         assert len(predictions) == len(golds)
-        for i in range(len(predictions)):  # p, l in zip(predictions, labels):
+        for i in range(len(predictions)):
             p, l = predictions[i], "\t".join(golds[i])
             id = ids[i]
             out_str = (id if ids is not None else "") + "\t" + self.labeldict[p] + "\t" + l + "\n"
@@ -335,18 +335,9 @@ class AllenWSDModel(Model, ABC):
                                         **kwargs):
         bpe_combiner = kwargs.get("bpe_combiner", "mean")
         vocab = Vocabulary() if vocab is None else vocab
-        if encoder_name.lower() == "nhs":
-            encoder_name = "bert-base-multilingual-cased"
         text_embedder = MultilayerPretrainedTransformerMismatchedEmbedder(encoder_name, layers_to_use,
                                                                           word_segment_emb_merger=bpe_combiner)
         embedding_size = text_embedder.get_output_dim()
-
-        if model_path is not None:
-            get_info_logger(__name__).info("Loading weights from {}".format(model_path))
-            state_dict = torch.load(model_path, map_location=torch.device("cpu"))
-            updated_state_dict = {"_matched_embedder.transformer_model." + k.replace("model.", ""): v for k, v in state_dict.items()}
-            updated_state_dict["_matched_embedder.transformer_model.embeddings.position_ids"] = text_embedder.state_dict()["_matched_embedder.transformer_model.embeddings.position_ids"]
-            text_embedder.load_state_dict(updated_state_dict, strict=False)
 
         word_embeddings: TextFieldEmbedder = BasicTextFieldEmbedder({"tokens": text_embedder})
         model = cls(word_embeddings=word_embeddings,
@@ -360,26 +351,6 @@ class AllenWSDModel(Model, ABC):
         return model
 
 
-@Model.register("ff_wsd_classifier")
-class AllenFFWsdModel(AllenWSDModel):
-    def __init__(self, word_embeddings: TextFieldEmbedder, out_sz, embedding_size,
-                 **kwargs):
-        super().__init__(word_embeddings, out_sz, **kwargs)
-        self.dropout = nn.Dropout(0.5)
-        self.classifier = nn.Linear(embedding_size, out_sz, bias=False)
-        self.head = Sequential(self.dropout, self.classifier)
-
-    def named_parameters(self, prefix: str = ..., recurse: bool = ...) -> Iterator[Tuple[str, Parameter]]:
-        params = list()
-        if self.finetune_embedder:
-            params.extend(self.word_embeddings.named_parameters())
-        params.extend(self.classifier.named_parameters())
-        yield from params
-
-    def wsd_head(self, embeddings):
-        return self.head(embeddings)
-
-
 @Model.register("batchnorm_wsd_classifier")
 class AllenBatchNormWsdModel(AllenWSDModel):
     def __init__(self, word_embeddings: TextFieldEmbedder,
@@ -388,16 +359,6 @@ class AllenBatchNormWsdModel(AllenWSDModel):
         self.classifier = nn.Linear(embedding_size, out_sz, bias=False)
         self.batchnorm = BatchNorm1d(embedding_size)
         self.linear = nn.Linear(embedding_size, embedding_size)
-        if "dropout_1" in kwargs:
-            self.dropout_prob_1 = kwargs.pop("dropout_1")
-        else:
-            self.dropout_prob_1 = 0.0
-        if "dropout_2" in kwargs:
-            self.dropout_prob_2 = kwargs.pop("dropout_2")
-        else:
-            self.dropout_prob_2 = 0.0
-        self.dropout_1 = nn.Dropout(self.dropout_prob_2)
-        self.dropout_2 = nn.Dropout(self.dropout_prob_2)
 
     def named_parameters(self, prefix: str = ..., recurse: bool = ...) -> Iterator[Tuple[str, Parameter]]:
         params = list()
@@ -405,15 +366,12 @@ class AllenBatchNormWsdModel(AllenWSDModel):
             params.extend(self.word_embeddings.named_parameters())
             params.extend(self.linear.named_parameters())
             params.extend(self.batchnorm.named_parameters())
-        ## TODO return batchnorm and linear params
         params.extend(self.classifier.named_parameters())
         yield from params
 
     def wsd_head(self, embeddings):
-        # embeddings = self.dropout_1(embeddings)
         if len(embeddings) > 1:
             embeddings = self.batchnorm(embeddings)
 
-        # embeddings = self.dropout_2(embeddings)
         embeddings = swish(self.linear(embeddings))
-        return self.classifier(embeddings)  # mask.unsqueeze(-1)
+        return self.classifier(embeddings)
