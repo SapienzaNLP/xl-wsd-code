@@ -2,7 +2,7 @@
 Code for the paper [XL-WSD: An Extra-Large and Cross-Lingual Evaluation Frameworkfor Word Sense Disambiguation](). Please visit https://sapienzanlp.github.io/xl-wsd/ for more info and to download the data.
 
 # Install
-First setup the python environment.
+First setup the python environment. Be sure that [anaconda](https://docs.anaconda.com/anaconda/install/) is already installed.
 ```bash
 conda create --name xl-wsd-code python=3.7
 conda activate xl-wsd-code
