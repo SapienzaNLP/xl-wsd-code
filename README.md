@@ -4,8 +4,10 @@ Code for the paper [XL-WSD: An Extra-Large and Cross-Lingual Evaluation Framewor
 # Install
 First setup the python environment. Be sure that [anaconda](https://docs.anaconda.com/anaconda/install/) is already installed.
 ```bash
+git clone https://github.com/SapienzaNLP/xl-wsd-code.git
 conda create --name xl-wsd-code python=3.7
 conda activate xl-wsd-code
+cd xl-wsd-code
 pip install -r requirements.txt
 conda install pytorch==1.5.0 torchtext==0.6.0 cudatoolkit=10.1 -c pytorch
 ```
