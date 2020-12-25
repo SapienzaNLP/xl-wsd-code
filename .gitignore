@@ -130,9 +130,9 @@ dmypy.json
 data/
 wandb/
 test_training.txt
-resources/
 src/nlp-tools
 src/nlp-tools_
 .vscode
 xl-wsd-data
 .vscode2
+resources/mappings
