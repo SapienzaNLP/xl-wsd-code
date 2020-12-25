@@ -47,7 +47,7 @@ wandb:
     - loss
     - epoch
   soft_match: True
-  project_name: wsd_framework_3.0
+  project_name: xl-wsd
   entity: pasini
 
-random_seed: 421 
+random_seed: 123 

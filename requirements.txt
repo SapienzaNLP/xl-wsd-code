@@ -4,5 +4,5 @@ pyyaml
 pandas
 tabulate
 lxml
--e git+git@github.com:pasinit/nlp_tools.git#egg=nlp_tools
-transformers==3.3.1
+-e git+https://github.com/pasinit/nlp_tools.git#egg=nlp_tools
+transformers==2.11
