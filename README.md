@@ -2,7 +2,7 @@
 Code for the paper [XL-WSD: An Extra-Large and Cross-Lingual Evaluation Frameworkfor Word Sense Disambiguation](). Please visit https://sapienzanlp.github.io/xl-wsd/ for more info and to download the data.
 
 # Install
-First setup the python environment.
+First setup the python environment. Be sure that [anaconda](https://docs.anaconda.com/anaconda/install/) is already installed.
 ```bash
 conda create --name xl-wsd-code python=3.7
 conda activate xl-wsd-code
@@ -61,7 +61,7 @@ dev_name:
     - dev-en
 ```
 `outpath` is the path to a directory where a new folder for the newly trained model can be created and where the checkpoints and information about the model will be stored.
-`encoder_name` may be any transformer model supported by [allen nlp 1.0](https://github.com/allenai/allennlp).
+`encoder_name` may be any transformer model supported by [allen nlp 1.0](https://github.com/allenai/allennlp/releases/tag/v1.0.0).
 
 `model_name` may be any name you would like to give to the model.
 
