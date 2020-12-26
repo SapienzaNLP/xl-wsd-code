@@ -134,7 +134,7 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
  ```
  would instead print results computed separately on nouns and verbs. 
  
-# (Pretrained-Models)
+# Pretrained Models
   
 | Encoder | Training Data | Link |
 | :---         |     :---      |          :--- |
