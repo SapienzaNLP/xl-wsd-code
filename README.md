@@ -134,12 +134,8 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
  ```
  would instead print results computed separately on nouns and verbs. 
  
- # Pretrained Models
- 
- | Encoder | Training Data | Link | 
- | :---  | : --- | :--- |
- |XLM-Roberta | SemCor+WNGT | []()|
- 
+# Pretrained Models
+  
 | Encoder | Training Data | Link |
 | :---         |     :---      |          :--- |
 | XLM-Roberta Large | SemCor     | [link]()    |
