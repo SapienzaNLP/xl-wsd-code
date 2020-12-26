@@ -1,5 +1,5 @@
 # XL-WSD
-Code for the paper [XL-WSD: An Extra-Large and Cross-Lingual Evaluation Frameworkfor Word Sense Disambiguation](). Please visit https://sapienzanlp.github.io/xl-wsd/ for more info and to download the data.
+Code for the paper [XL-WSD: An Extra-Large and Cross-Lingual Evaluation Frameworkfor Word Sense Disambiguation](). Please visit https://sapienzanlp.github.io/xl-wsd/ for more info and to download the data. [Pretrained models](#Pretrained-models) are available at the bottom of this page.
 
 # Install
 First setup the python environment. Be sure that [anaconda](https://docs.anaconda.com/anaconda/install/) is already installed.
@@ -134,7 +134,7 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
  ```
  would instead print results computed separately on nouns and verbs. 
  
-# Pretrained Models
+# (Pretrained-Models)
   
 | Encoder | Training Data | Link |
 | :---         |     :---      |          :--- |
