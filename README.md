@@ -141,7 +141,7 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
  |XLM-Roberta | SemCor+WNGT | []()|
  
 | Encoder | Training Data | Link |
-| :---         |     :---:      |          ---: |
+| :---         |     :---      |          :--- |
 | XLM-Roberta  | SemCor     | [link]()    |
 
  
