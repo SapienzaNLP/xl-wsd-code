@@ -138,9 +138,6 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
   
 | Encoder | Training Data | Link |
 | :---         |     :---      |          :--- |
-| XLM-Roberta Large | SemCor     | [link]()    |
-| XLM-Roberta Base | SemCor     | [link]()    |
-| Multilingual BERT | SemCor     | [link]()    |
 | XLM-Roberta Large | SemCor+WNGT     | [link]()    |
 | XLM-Roberta Base | SemCor+WNGT     | [link]()    |
 | Multilingual BERT | SemCor+WNGT     | [link]()    |
