@@ -132,4 +132,12 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
  ```bash
  PYTHONPATH=. python src/evaluation/evaluate_model.py --config config/config_en_semcor_wngt.test.yaml --pos n v
  ```
- would instead print results computed separately on nouns and versb. 
+ would instead print results computed separately on nouns and verbs. 
+ 
+ # Pretrained Models
+ | Encoder | Training Data | Link | 
+ | :---  | : --- | :--- |
+ |XLM-Roberta | SemCor+WNGT | []()|
+ 
+ 
+ 
