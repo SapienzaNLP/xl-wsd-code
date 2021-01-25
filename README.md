@@ -138,9 +138,9 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
   
 | Encoder | Training Data | Link |
 | :---         |     :---      |          :--- |
-| XLM-Roberta Large | SemCor+WNGT     | [link]()    |
-| XLM-Roberta Base | SemCor+WNGT     | [link]()    |
-| Multilingual BERT | SemCor+WNGT     | [link]()    |
+| XLM-Roberta Large | SemCor+WNGT     | [link](https://drive.google.com/file/d/1o1cQ7edfStb5LWn87-ehv011Ttj756Cp/view?usp=sharing)    |
+| XLM-Roberta Base | SemCor+WNGT     | [link](https://drive.google.com/file/d/1O9pzNdFbDYbWAjZ155dxoHIlcJp_1Ao9/view?usp=sharing)    |
+| Multilingual BERT | SemCor+WNGT     | [link](https://drive.google.com/file/d/1CmRzY1e7SMFm4-stZBWKOhVw1AOSWFaf/view?usp=sharing)    |
 | ALL | SemCor+WNGT | [link](https://drive.google.com/file/d/1rKRzJ0GgU6MYn2X6MM6eZ2pxoZef0mBP/view?usp=sharing) |
 
 # License 
