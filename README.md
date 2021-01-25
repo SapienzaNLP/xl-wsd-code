@@ -141,7 +141,7 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
 | XLM-Roberta Large | SemCor+WNGT     | [link]()    |
 | XLM-Roberta Base | SemCor+WNGT     | [link]()    |
 | Multilingual BERT | SemCor+WNGT     | [link]()    |
-| ALL | SemCor+WNGT | [link]() |
+| ALL | SemCor+WNGT | [link](https://drive.google.com/file/d/1rKRzJ0GgU6MYn2X6MM6eZ2pxoZef0mBP/view?usp=sharing) |
 
 # License 
 This project is released under the CC-BY-NC 4.0 license (see LICENSE). If you use the code in this repo, please link it.
