@@ -92,7 +92,7 @@ data:
 
 model:
   device: cuda
-  encoder_name: xlm-roberta-large
+  encoder_name: bert-base-multilingual-cased 
   wsd_model_name: batchnorm_wsd_classifier
   layers_to_use:
     - -1

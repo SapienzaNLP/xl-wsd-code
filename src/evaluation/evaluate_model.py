@@ -102,7 +102,7 @@ def evaluate_datasets(model: AllenWSDModel,
             if verbose:
                 logger.info(f"{name}: instances: {metrics['total']}, precision: {metrics['precision']}, recall: {metrics['recall']}, f1: {metrics['f1']}")
             lines.append([metrics["total"],metrics["f1"]])
-    logger.fino("SUMMARY:")
+    logger.info("SUMMARY:")
     d = DataFrame(lines, columns=["instances","F1"], index=names)
     with pandas.option_context('display.max_rows', None, 'display.max_columns',
                                None, 'display.float_format', '{:0.3f}'.format):
@@ -148,7 +148,7 @@ def main(args):
     lemma2synsets, mfs_dictionary, label_vocab = get_data(langs, mfs_file, inventory_dir=inventory_dir)
     test_dss = {lang: [get_allen_datasets(encoder_name, lemma2synsets,
                                           label_vocab, test_label_mapper, config["data"]["max_segments_in_batch"],
-                                          {lang: [tp]}, force_reload=True, serialize=False,
+                                          {lang: [tp]}, 
                                           device = torch.device(device), pos=test_pos) for tp in test_paths]
                 for lang, test_paths in lang2test_paths.items()}
 
