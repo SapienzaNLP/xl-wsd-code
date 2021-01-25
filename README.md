@@ -1,5 +1,5 @@
 # XL-WSD
-Code for the paper [XL-WSD: An Extra-Large and Cross-Lingual Evaluation Frameworkfor Word Sense Disambiguation](). Please visit https://sapienzanlp.github.io/xl-wsd/ for more info and to download the data.
+Code for the paper [XL-WSD: An Extra-Large and Cross-Lingual Evaluation Frameworkfor Word Sense Disambiguation](). Please visit https://sapienzanlp.github.io/xl-wsd/ for more info and to download the data. [Pretrained models](#Pretrained-models) are available at the bottom of this page.
 
 # Install
 First setup the python environment. Be sure that [anaconda](https://docs.anaconda.com/anaconda/install/) is already installed.
@@ -63,6 +63,7 @@ dev_name:
     - dev-en
 ```
 `outpath` is the path to a directory where a new folder for the newly trained model can be created and where the checkpoints and information about the model will be stored.
+
 `encoder_name` may be any transformer model supported by [allen nlp 1.0](https://github.com/allenai/allennlp/releases/tag/v1.0.0).
 
 `model_name` may be any name you would like to give to the model.
@@ -131,4 +132,15 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
  ```bash
  PYTHONPATH=. python src/evaluation/evaluate_model.py --config config/config_en_semcor_wngt.test.yaml --pos n v
  ```
- would instead print results computed separately on nouns and versb. 
+ would instead print results computed separately on nouns and verbs. 
+ 
+# Pretrained Models
+  
+| Encoder | Training Data | Link |
+| :---         |     :---      |          :--- |
+| XLM-Roberta Large | SemCor+WNGT     | [link]()    |
+| XLM-Roberta Base | SemCor+WNGT     | [link]()    |
+| Multilingual BERT | SemCor+WNGT     | [link]()    |
+
+ 
+ 
