@@ -24,9 +24,10 @@ In case you do not want to move WordNet to the `/opt/` directory, then set the `
 # Train
 ### Setup data
 ```bash
-wget https://sapienzanlp.github.io/xl-wsd/xl-wsd-data.tar.gz
+wget --header="Host: doc-04-b8-docs.googleusercontent.com" --header="User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 Safari/537.36" --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" --header="Accept-Language: en-GB,en-US;q=0.9,en;q=0.8" --header="Referer: https://drive.google.com/" --header="Cookie: AUTH_bjalsfn9vp89mfmro6spe8un3che13a6_nonce=nlgjg7mf6jn9e" --header="Connection: keep-alive" "https://doc-04-b8-docs.googleusercontent.com/docs/securesc/qpect75hpbjc0ojmotm96i6g1v6ev8i1/ssjeem6krjiq45h1lb2t3k0t4uh11fea/1617902700000/13518213284567006193/13518213284567006193/19YTL-Uq95hjiFZfgwEpXRgcYGCR_PQY0?e=download&authuser=1&nonce=nlgjg7mf6jn9e&user=13518213284567006193&hash=j6hh86p5arl35lijpmf4oak2hnhvrr20" -c -O 'xl-wsd-data.zip'
 tar xvzf xl-wsd-data.tar.gz
 ```
+if `wget` does not work, download the data from [https://drive.google.com/file/d/19YTL-Uq95hjiFZfgwEpXRgcYGCR_PQY0/view?usp=sharing](https://drive.google.com/file/d/19YTL-Uq95hjiFZfgwEpXRgcYGCR_PQY0/view?usp=sharing)
 ### Setup config
 open `config/config_en_semcor_wngt.train.yaml` with your favourite text editor.
 edit the paths for `inventory_dir`, `test_data_root` and `train_data_root`.
