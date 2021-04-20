@@ -17,7 +17,8 @@ import pandas
 
 from src.datasets.dataset_utils import get_data, get_allen_datasets
 from src.modelling.neural_wsd_models import AllenWSDModel, WSDF1
-from src.utils.utils import get_info_logger, get_model
+from src.utils.utils import get_model
+from src.utils.logging import get_info_logger 
 
 
 logger = get_info_logger(__name__)

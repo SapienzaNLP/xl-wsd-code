@@ -19,7 +19,8 @@ from src.datasets.dataset_utils import (build_outpath_subdirs,
                                         get_dev_dataset)
 from src.evaluation.evaluate_model import evaluate_datasets
 from src.modelling.neural_wsd_models import WSDF1, WSDOutputWriter
-from src.utils.utils import get_info_logger, get_model
+from src.utils.utils import get_model
+from src.utils.logging import get_info_logger
 from transformers import AdamW
 
 def init_seeds(seed):
@@ -155,7 +156,7 @@ def main(args):
                                      validation_data_loader=dev_iterator,
                                      num_gradient_accumulation_steps=gradient_accumulation,
                                      validation_metric=training_config.get("validation_metric", "-loss"),
-                                     epoch_callbacks=callbacks,
+                                     callbacks=callbacks,
                                      patience=patience,
                                      serialization_dir=serialization_dir,
                                      checkpointer=Checkpointer(serialization_dir,

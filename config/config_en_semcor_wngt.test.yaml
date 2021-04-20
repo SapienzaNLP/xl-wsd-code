@@ -18,14 +18,14 @@ data:
     - ja
     - ko
     - sl
-  test_data_root: /home/tommaso/Documents/data/xl-wsd/evaluation_datasets/
+  test_data_root: /home/npf290/dev/xl-wsd-code/data/evaluation_datasets/
   train_data_root:
     en:
-      - /home/tommaso/Documents/data/xl-wsd/training_datasets/semcor_en/semcor_en.data.xml
-      - /home/tommaso/Documents/data/xl-wsd/training_datasets/wngt_examples_en/wngt_examples_en.data.xml
-      - /home/tommaso/Documents/data/xl-wsd/training_datasets/wngt_glosses_en/wngt_glosses_en.data.xml
+      - /home/npf290/dev/xl-wsd-codedata/training_datasets/semcor_en/semcor_en.data.xml
+      - /home/npf290/dev/xl-wsd-codedata/training_datasets/wngt_examples_en/wngt_examples_en.data.xml
+      - /home/npf290/dev/xl-wsd-codedata/training_datasets/wngt_glosses_en/wngt_glosses_en.data.xml
   sense_inventory: bnoffsets
-  outpath: data/output/models/
+  outpath: 
   test_names:
     en:
         - test-en
@@ -88,11 +88,11 @@ data:
 
   max_segments_in_batch: 1000
   force_reload: True
-  inventory_dir: /home/tommaso/Documents/data/xl-wsd/inventories
+  inventory_dir: /home/npf290/dev/xl-wsd-code/data/inventories
 
 model:
-  device: cuda
-  encoder_name: bert-base-multilingual-cased 
+  device: cpu
+  encoder_name: facebook/bart-large
   wsd_model_name: batchnorm_wsd_classifier
   layers_to_use:
     - -1

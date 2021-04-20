@@ -8,7 +8,7 @@ data:
       - data/training_datasets/semcor_en/semcor_en.data.xml
       - data/training_datasets/wngt_examples_en/wngt_examples_en.data.xml
       - data/training_datasets/wngt_glosses_en/wngt_glosses_en.data.xml
-  outpath: /home/npf290/dev/xl-wsd-code/data/pretrained_models/pre-asm-token-all-layers/wsd_finetuning/ 
+  outpath: /home/npf290/dev/xl-wsd-code/data/pretrained_models/pre-asm-concat-all-layers/wsd_finetuning/ 
   test_names:
     en:
         - test-en
@@ -31,7 +31,7 @@ model:
     - -4
   cache_instances: True
   finetune_embedder: False 
-  model_path: /home/npf290/dev/xl-wsd-code/data/pretrained_models/pre-asm-token-all-layers/Token_pretrained-with-finetune-no-layers.lr-5e-5.629200
+  model_path: /home/npf290/dev/xl-wsd-code/data/pretrained_models/pre-asm-concat-all-layers/ConcatCLS_pretrained-with-finetune-no-layers.lr-5e-5.629200
 
 training:
   num_epochs: 50

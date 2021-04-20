@@ -4,8 +4,6 @@ from typing import Any, Dict, Iterator, Tuple
 
 import numpy as np
 import torch
-from src.utils.utils import *
-
 from allennlp.data import Vocabulary
 from allennlp.models import Model
 from allennlp.modules import TextFieldEmbedder
@@ -18,9 +16,9 @@ from nlp_tools.nlp_models.multilayer_pretrained_transformer_mismatched_embedder 
 from torch import nn
 from torch.nn import Parameter
 from torch.nn.modules.batchnorm import BatchNorm1d
-from transformers.activations import swish
+from transformers.activations import silu
 
-
+from src.utils.logging import get_info_logger
 
 
 class WSDOutputWriter(OutputWriter):
@@ -341,6 +339,20 @@ class AllenWSDModel(Model, ABC):
                                                                           word_segment_emb_merger=bpe_combiner)
         embedding_size = text_embedder.get_output_dim()
 
+        if model_path is not None:
+            get_info_logger(__name__).info("Loading weights from {}".format(model_path))
+            state_dict = torch.load(model_path, map_location=torch.device("cpu"))
+            # for k in list(state_dict.keys()):
+            #     if not k.startswith("model."):
+            #         del state_dict[k]
+            if type(state_dict) == list:
+                state_dict = state_dict[0]
+            updated_state_dict = {"_matched_embedder.transformer_model." + k.replace("model.roberta", ""): v for k, v in state_dict.items()}
+            # print(text_embedder.state_dict().keys())
+            # updated_state_dict["_matched_embedder.transformer_model.embeddings.position_ids"] = text_embedder.state_dict()["_matched_embedder.transformer_model.embeddings.position_embeddings"]
+            text_embedder.load_state_dict(updated_state_dict, strict=False)
+
+
         word_embeddings: TextFieldEmbedder = BasicTextFieldEmbedder({"tokens": text_embedder})
         model = cls(word_embeddings=word_embeddings,
                     out_sz=out_size, vocab=vocab,
@@ -375,5 +387,5 @@ class AllenBatchNormWsdModel(AllenWSDModel):
         if len(embeddings) > 1:
             embeddings = self.batchnorm(embeddings)
 
-        embeddings = swish(self.linear(embeddings))
+        embeddings = silu(self.linear(embeddings))
         return self.classifier(embeddings)

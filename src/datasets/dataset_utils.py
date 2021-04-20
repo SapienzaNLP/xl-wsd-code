@@ -7,7 +7,7 @@ from typing import Dict, List, Set, Tuple, Union
 import _pickle as pkl
 import torch
 from allennlp.data import Vocabulary
-from allennlp.data.dataset_readers.dataset_reader import AllennlpDataset
+from allennlp.data.dataset_readers.dataset_reader import DatasetReader
 from allennlp.data.token_indexers import PretrainedTransformerMismatchedIndexer
 from nlp_tools.allen_data.iterators import get_bucket_iterator
 from nlp_tools.allennlp_training_callbacks.callbacks import OutputWriter
@@ -16,7 +16,7 @@ from nlp_tools.data_io.datasets import LabelVocabulary, WSDDataset
 from src.datasets import (BABELNET_VOCABULARY,
                           DEFAULT_INVENTORY_DIR,
                           WORDNET_DICT_PATH)
-from src.utils.utils import get_info_logger
+from src.utils.logging import get_info_logger
 
 logger = get_info_logger(__name__)
 
@@ -160,7 +160,7 @@ def get_allen_datasets(
     training_ds = get_dataset(
         encoder_name, lang2paths, lemma2synsets, label_mapper, label_vocab, pos=pos
     )
-    training_ds.index_with(Vocabulary())
+    # training_ds.index_with(Vocabulary())
     training_iterator = get_bucket_iterator(
         training_ds, max_segments_in_batch, is_trainingset=is_trainingset, device=device
     )
@@ -174,7 +174,7 @@ def get_dataset(
     label_mapper: Dict[str, str],
     label_vocab: LabelVocabulary,
     pos: Union[None, Set] = None,
-) -> AllennlpDataset:
+) -> DatasetReader:
     indexer = PretrainedTransformerMismatchedIndexer(encoder_name)
     dataset = WSDDataset(
         paths,
