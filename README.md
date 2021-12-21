@@ -147,14 +147,14 @@ the `evaluate_model.py` takes also the following parameters that would, in case,
 # License 
 This project is released under the CC-BY-NC 4.0 license (see LICENSE). If you use the code in this repo, please link it.
 
-# Acknowledge 
+# Acknowledgements
 The authors gratefully acknowledge the support of the ERC Consolidator Grant MOUSSE No. 726487 under the European Union's Horizon 2020 research and innovation programme.
 
 The authors gratefully acknowledge the support of the ERC Consolidator Grant FoTran No. 771113 under the European Union's Horizon 2020 research and innovation programme.
 
 The authors gratefully acknowledge the support of the ELEXIS project No. 731015 under the European Union's Horizon 2020 research and innovation programme.
 
-Authors also thankthe CSC - IT Center for Science (Finland)for the computational resources.
+Authors also thank the CSC - IT Center for Science (Finland)for the computational resources.
 
 
  
